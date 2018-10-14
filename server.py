@@ -106,7 +106,8 @@ class DataFetching(Resource):
         return json.dumps(values).encode("utf8")
 
     def getRange(self, start, until):
-        print( "start: '{0}'  until: '{1}'".format(start, until))
+        if args.verbose:
+            print( "start: '{0}'  until: '{1}'".format(start, until))
         query = "SELECT * FROM pellets "
         
         if start != None:
@@ -120,11 +121,13 @@ class DataFetching(Resource):
                 query = query + " AND date <= '{0}'".format(until)
         elif until != None:
             query = query + "WHERE date <= '{0}'".format(until)
-        print("QUERY: " + query)
+        if args.verbose:
+            print("QUERY: " + query)
         ret = self.db.execute(query).fetchall()
         for row in ret:
             row['date']=convertToIsoformatWithTz(row['date'])
-        print("response with {0} sql-lines".format(len(ret)))
+        if args.verbose:
+            print("response with {0} sql-lines".format(len(ret)))
         #append timecode
         return json.dumps(ret).encode("utf8")
 
@@ -132,7 +135,8 @@ class DataFetching(Resource):
         if len(request.args) < 1: return
         request.responseHeaders.addRawHeader(b"content-type", b"application/json")
         request.setHeader(b'Access-Control-Allow-Origin', b'*')
-        print(request.args)
+        if args.verbose:
+            print(request.args)
         if request.args.get(b'last') != None:
             request.setResponseCode(200)
             return self.getLast()
