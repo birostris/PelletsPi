@@ -1,14 +1,18 @@
 # PelletsPi
-Pellets logger and webserver for Ariterm Biomatic 20i
+External pellets logger and webserver for Ariterm Biomatic 20i.
 
 The project constists of a data collector, a webserver and a website visualizing the data
 The project is under development and no responsibility is taken that it works perfect or does no harm to the raspberry in the Ariterm boiler.
+
 Even though this readme is written in english - the website shown in this project is purely in swedish.
 
 # Usage
-In two different screens:
-* start the collector: `python3 pellets.py 192.168.2.204 logger@BM20Pxxxxxx your_pwd_on_boiler`
-* start the webserver: `python3 server.py` 
+The data collector and webserver scripts are separated because of development and testing conveniences.
+
+I use these scripts on a Raspberry PI running. Run the scripts in two different screens.
+1. start the collector: `python3 pellets.py 192.168.2.204 logger@BM20Pxxxxxx your_pwd_on_boiler`
+2. start the webserver: `python3 server.py`
+3. Browse to website: `http://localhost:8080/web/pellets.html` or `http://xxx.xxx.xxx:8080/web/pellets.html` where xxx.xxx.xxx is the ip to the webserver. 
 
 Both pellets.py and server.py have --help or -h command line help to show more options.
 
@@ -24,7 +28,9 @@ pip3 install requests         (tested with v2.19.1)
 ### The collector - pellets.py
 The data collector connects to the boiler raspberry web interface and requests data at a regular interval.
 The data is stored in a sqlite database by modifying the last row or appended to the database if a time threshold is hit or when the status of the boiler is changed, i.e. goes from standby to ignition.
+
 If login to the boiler fails it will retry a couple of times and then throw an exception.
+
 It is good practice to create a "user" account on the boiler that is soley used for the logging.
 
 ### The webserver - server.py
@@ -33,6 +39,7 @@ Requests are using endpoints
 * `/data?last=true` gives the last stored value in the database 
 * `/data?from=#######` gives all entries in database since the ISO-formatted timestamp. 
 * `/data?summary=##` gives summary data for the amount of days set. Summary data consists of min,max,avg outdoor temp, storage level and pellets usage per day
+* `/web/pellets.html` is the endpoint to get the website
 
 ### The website - pellets.html and pellets.js
 The website shows a selection of the last data in the database, with warning and error indicators.
@@ -42,7 +49,10 @@ The date shown on top is the date from the last entry of the database.
 * The förråd-light will turn red when there is an alarm from the storage, i.e. low level of pellets.
 * The panna-light will turn red when there is an alarm from the boiler.
 * The av/på-light will be green or off depending on the boilder on/off state.
-Charting is done using highcharts.
+
+Website is in swedish using Europe/Stockholm timezone
+
+Charting is done using Highcharts. Moment is used for handling times and timezones.
 
 
 
