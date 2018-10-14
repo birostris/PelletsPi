@@ -1,0 +1,94 @@
+/* If you want you can use font-face */
+body { 
+    color:white;
+    background-color:rgb(11, 11, 39); 
+    font-family: 'Unica One', Arial, Helvetica, sans-serif;
+}
+
+.clock {
+    width:200px; 
+    margin:0 auto; 
+    border:0px solid #333; color:#fff; 
+    float: left;
+}
+
+#Date { font-family: 'Unica One',Arial, Helvetica, sans-serif; font-size:16px; text-align:center; text-shadow:0 0 5px #00c6ff; }
+ul { width:200px; margin:0px; padding:0px; list-style:none; text-align:center; }
+ul li { display:inline; font-size:30px; text-align:center; font-family: 'Unica One', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
+#point { position:relative; padding-left:5px; padding-right:5px; }
+
+.ledbox {
+    display:inline;
+    position: relative;
+    font: normal 18px arial;
+    text-align: right;
+    text-indent: 35px;
+    margin: 8px;
+    height: 25px;
+    float: left;
+}
+
+.led{
+    color: #AF0;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 25px;
+    height: 25px;
+    background: currentColor;
+    background-image: radial-gradient(top, #616161 0%, #616161 20%, #535353 60%);
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, currentColor 0 2px 12px;
+}
+
+
+.led_off
+{
+    color: #342;
+}
+
+@keyframes blinkRed {
+    from { background-color: currentColor; }
+    50% { background-color: #800; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #600 0 -1px 9px, #700 0 2px 0; }
+    to { background-color: currentColor; }
+}
+
+.led_warning
+{
+    color: #F20;
+    background-color: #F20;
+    animation: blinkRed 1s infinite;
+}
+
+.valuebox{
+    background-color:midnightblue;
+    border: 2px solid white;
+    width: 100px;
+    height: 75px;
+    border-radius: 4px;
+    float: left;
+    cursor: pointer;
+    font: normal 14px arial;
+    text-align: right;
+    text-transform: uppercase;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 5px;
+    padding-top: 0%;
+    vertical-align: bottom;
+}
+
+.fire{
+    background-image: url("fire.gif");
+    background-size: 150px 100px;
+    background-position: center;
+}
+
+
+.valuedata{
+    font: normal 32px arial;
+    text-align: center;
+    position: relative;
+    text-transform:none;
+    top: 5%;
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<head>
+    <link rel="stylesheet" href="/styles/pellets.css">
+    <title>Ridd Pellets</title>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data-2012-2022.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.1.4/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.1.4/highcharts-more.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.1.4/themes/dark-blue.js"></script>
+    <script src="/scripts/pellets.js"></script>
+ 
+    <div style="height:70px">
+        <div>
+
+        <span class="clock">
+            <div id="Date"></div>
+            <ul>
+                <li id="hours"></li>
+                <li id="point">:</li>
+                <li id="min"></li>
+                <li id="point">:</li>
+                <li id="sec"></li>
+            </ul>
+        </span>
+        <span id="lastDbTime" style="font-size:11">Never</span>
+    </div>    
+
+        <span class="ledbox"><div id="onoff" class="led"></div>Av/P&aring</span>
+        <span class="ledbox"><div id="alarm" class="led led_off"></div>Panna</span>
+        <span class="ledbox"><div id="pelletsalarm" class="led led_warning"></div>F&oumlrr&aringd</span>
+    
+        <span class="ledbox"><div id="communication" class="led"></div>Server</span>
+        <span class="ledbox"><div id="database" class="led"></div>Databas</span>
+    </div>
+     
+    <div style="height:95px">
+
+    <div id="outerTemp" class="valuebox">Utomhus  &degC
+        <div id="outerTempVal" class="valuedata">hej</div>
+    </div>
+    <div id="boilerTemp" class="valuebox">Panna  &degC
+        <div id="boilerTempVal" class="valuedata">hej</div>
+    </div>
+    <div id="storage" class="valuebox">Pellets  kg
+        <div id="storageVal" class="valuedata">hej</div>
+    </div>
+    <div id="usage" class="valuebox">S&aumlckar/dag
+        <div id="usageVal" class="valuedata">hej</div>
+    </div>
+    <div id="pelletsleft" class="valuebox">Dagar kvar
+        <div id="pelletsleftVal" class="valuedata">hej</div>
+    </div>
+    <div id="status" class="valuebox fire">Status
+        <div id="statusVal" class="valuedata">hej</div>
+    </div>
+    </div>
+
+    <div id="detailedContainer" style="min-width: 375px; height: 250px;"></div>
+    <div id="overviewContainer" style="min-width: 375px; height: 250px;"></div>
+
+    <br>
+    <button id="OneDay">1 dag</button>
+    <button id="ThreeDays">3 dagar</button>
+    <button id="FiveDays">5 dagar</button>
+
+    <button id="OneWeek">1 vecka</button>
+    <button id="TwoWeeks">2 veckor</button>
+    <button id="OneMonth">1 m&aringnad</button>
+    <button id="TwoMonths">2 m&aringnader</button>
+    <button id="SixMonths">6 m&aringnader</button>
+    <button id="OneYear">1 &Aringr</button>
+
+    <br>
+    <br>
+    <button id="Reload">Reload</button>
+
+    <script type="text/javascript">
+
+        $(window).ready(function () {
+            PelletsStartup();
+        });
+    </script>
+
+</body>
+
+</html>
