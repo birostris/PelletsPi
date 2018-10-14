@@ -21,18 +21,18 @@ Requests are using endpoints
 ## The website - pellets.html and pellets.js
 The website shows a selection of the last data in the database, with warning and error indicators.
 The date shown on top is the date from the last entry of the database.
-The server-light will turn red if the webserver is not functional.
-The database-light will turn red if the last entry is to old - an indication that pellets.py script is not working fine, and might need to be restarted.
-The förråd-light will turn red when there is an alarm from the storage, i.e. low level of pellets.
-The panna-light will turn red when there is an alarm from the boiler.
-The av/på-light will be green or off depending on the boilder on/off state.
+* The server-light will turn red if the webserver is not functional.
+* The database-light will turn red if the last entry is to old - an indication that pellets.py script is not working fine, and might need to be restarted.
+* The förråd-light will turn red when there is an alarm from the storage, i.e. low level of pellets.
+* The panna-light will turn red when there is an alarm from the boiler.
+* The av/på-light will be green or off depending on the boilder on/off state.
 Charting is done using highcharts.
 
 ## Dependencies
 The scripts are written in Python and tested on python v3.5.6
-pip3 install twisted          (tested with v18.7.0)
-pip3 install python-dateutil  (tested with v2.7.3)
-pip3 install requests         (tested with v2.19.1)
+- pip3 install twisted          (tested with v18.7.0)
+- pip3 install python-dateutil  (tested with v2.7.3)
+- pip3 install requests         (tested with v2.19.1)
 
 # Usage
 In two different screens:
