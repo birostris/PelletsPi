@@ -189,8 +189,8 @@ var detailedOptions = {
         type: 'datetime'
     },
     yAxis: [{ //primary axis
-        softMin: -5.0,
-        softMax: 5.0,
+        softMin: 0,
+        softMax: 0,
         minRange: 10.0,
         minPadding: 0,
         tickAmount: 5,
@@ -219,33 +219,33 @@ var detailedOptions = {
             }
         },
         labels: {
-            x: 3,
-            algin: 'right',
+            x: -30,
+            algin: 'left',
             format: '{value}°C',
             style: {
                 color: Highcharts.getOptions().colors[1]
             }
         },
         opposite: true
-    // }, { // Third yAxis
-    //     softMin: 0,
-    //     softMax: 400,
-    //     gridLineWidth: 0,
-    //     title: {
-    //         text: 'Pellets',
-    //         style: {
-    //             color: Highcharts.getOptions().colors[2]
-    //         }
-    //     },
-    //     labels: {
-    //         format: '{value}kg',
-    //         style: {
-    //             color: Highcharts.getOptions().colors[2]
-    //         }
-    //     },
-    //     opposite: true
-    //
-    }],
+    }, { // Third yAxis
+        tickPositions: [15,22.5,30,37.5,45],
+        alignTicks : false,
+        title: {
+            text: null,
+            style: {
+                color: Highcharts.getOptions().colors[2]
+            }
+        },
+        labels: {
+            algin: 'right',
+            format: '{value}°C',
+            style: {
+                color: Highcharts.getOptions().colors[2]
+            }
+        },
+        opposite: true
+    }
+    ],
     tooltip: {
         shared: true
     },
@@ -261,6 +261,7 @@ var detailedOptions = {
             name: "Utomhus",
             type: 'line',
             yAxis: 0,
+            zIndex: 1,
             tooltip: { valueSuffix: '°C', valueDecimals: 1 },
             marker: {enabled:false}
         },
@@ -268,14 +269,19 @@ var detailedOptions = {
             name: "Panna",
             type: 'line',
             yAxis: 1,
+            zIndex: 2,
             tooltip: { valueSuffix: '°C', valueDecimals: 1 },
             marker: {enabled:false}
-        // },
-        // {
-        //     name: "Pellets",
-        //     type: 'spline',
-        //     yAxis: 2,
-        //     tooltip: { valueSuffix: 'kg', valueDecimals: 1 }
+        },
+        {
+            name: "Radiator",
+            type: 'line',
+            yAxis: 2,
+            zIndex: 0,
+            tooltip: { valueSuffix: '°C', valueDecimals: 1 },
+            marker: {enabled:false},
+            color: Highcharts.getOptions().colors[2],
+
         }
     ]
 };
@@ -292,8 +298,11 @@ var overviewOptions = {
         type: 'datetime'
     },
     yAxis: [{ //primary axis
-        tickAmount : 5,
-        minRange: 15.0,
+        softMin: 0,
+        softMax: 0,
+        minRange: 10.0,
+        minPadding: 0,
+        tickAmount: 5,
         labels: {
             algin: 'left',
             x: 30,
@@ -316,15 +325,15 @@ var overviewOptions = {
         title: {
             text: null, //'Pelletsåtgång per dag',
             style: {
-                color: Highcharts.getOptions().colors[2]
+                color: Highcharts.getOptions().colors[6]
             }
         },
         labels: {
-            x: 3,
+            x: -23,
             algin: 'right',
             format: '{value}',
             style: {
-                color: Highcharts.getOptions().colors[2]
+                color: Highcharts.getOptions().colors[6]
             }
         },
         opposite: true
@@ -337,7 +346,7 @@ var overviewOptions = {
         title: {
             text: null, //'Pellets',
             style: {
-                color: Highcharts.getOptions().colors[3]
+                color: Highcharts.getOptions().colors[4]
             }
         },
         labels: {
@@ -345,11 +354,32 @@ var overviewOptions = {
             x: 3,
             format: '{value}kg',
             style: {
-                color: Highcharts.getOptions().colors[3]
+                color: Highcharts.getOptions().colors[4]
             }
         },
         tickLength: 0,
         opposite: true
+    }, { // Fourth yAxis
+        min: 85,
+        max: 125,
+        tickAmount : 5,
+        gridLineWidth: 0,
+        title: {
+            text: null, //'Pellets',
+            style: {
+                color: Highcharts.getOptions().colors[3]
+            }
+        },
+        labels: {
+            algin: 'left',
+            x: 0,
+            format: '{value}°C',
+            style: {
+                color: Highcharts.getOptions().colors[3]
+            }
+        },
+        tickLength: 0,
+        opposite: false
     }],
     tooltip: {
         shared: true
@@ -389,23 +419,32 @@ var overviewOptions = {
         },
         {
             name: "Åtgång per dag",
-            type: 'spline',
+            type: 'line',
             step: 'center',
             yAxis: 1,
             fillOpacity: 0.1,
             lineWidth: 1,
             tooltip: { valueSuffix: 'säckar', valueDecimals: 2 },
-            color: Highcharts.getOptions().colors[2],
+            color: Highcharts.getOptions().colors[6],
             marker: {enabled:false}
         },
         {
             name: "Pellets",
-            type: 'spline',
+            type: 'line',
             yAxis: 2,
             tooltip: { valueSuffix: 'kg', valueDecimals: 1 },
+            color: Highcharts.getOptions().colors[4],
+            marker: {enabled:false}
+        },
+        {
+            name: "Max Röktemp",
+            type: 'line',
+            yAxis: 3,
+            tooltip: { valueSuffix: '°C', valueDecimals: 0 },
             color: Highcharts.getOptions().colors[3],
             marker: {enabled:false}
         }
+
     ]
 };
 
@@ -419,6 +458,7 @@ function UpdateDetailedChartData()
         if (reqstatus == "success") {
             var boilerData = [];
             var outdoorData = [];
+            var radiatorData = [];
             for(var i in data)
             {
                 var entry = data[i];
@@ -427,14 +467,16 @@ function UpdateDetailedChartData()
                 var date = new Date(entry['date']).valueOf();
                 var bt = entry['boilerTemp'];
                 var ot = entry['outdoorTemp'];
+                var rt = entry['supplyTemp'];
                 //var st = entry['pelletsLevel'];
                 boilerData.push([date, bt]);
                 outdoorData.push([date, ot]);
+                radiatorData.push([date, rt]);
                 //storageData.push([date, st]);
             }
             detailedOptions.series[0].data = outdoorData;
             detailedOptions.series[1].data = boilerData;
-            //detailedOptions.series[2].data = storageData;
+            detailedOptions.series[2].data = radiatorData;
         }
         else
         {
@@ -451,7 +493,7 @@ function UpdateOverviewChartData()
             var tempAvgData = [];
             var usageData = [];
             var storageData = [];
-            //var storageData = [];
+            var maxGasTempData = [];
             for(var i in data)
             {
                 var entry = data[i];
@@ -463,16 +505,19 @@ function UpdateOverviewChartData()
                 var avgTemp = entry['MeanTemp'];
                 var usage = entry['usage'] / 16;
                 var storage = entry['level'];
+                var maxGasTemp = entry['MaxGasTemp'];
                 //var st = entry['pelletsLevel'];
                 tempMinMaxData.push([date, minTemp, maxTemp]);
                 tempAvgData.push([date, avgTemp]);
                 usageData.push([date, usage]);
                 storageData.push([date, storage]);
+                maxGasTempData.push([date, maxGasTemp]);
             }
             overviewOptions.series[0].data = tempAvgData;
             overviewOptions.series[1].data = tempMinMaxData;
             overviewOptions.series[2].data = usageData;
             overviewOptions.series[3].data = storageData;
+            overviewOptions.series[4].data = maxGasTempData;
             //detailedOptions.series[2].data = storageData;
         }
         else

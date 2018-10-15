@@ -94,7 +94,7 @@ class DataFetching(Resource):
             usage = self.computeUsage(currDay, nextDay)
 
             q = """SELECT MIN(Date) as date, MAX(Date) as endDate, Min(outdoorTemp) as MinTemp, 
-            MAX(outdoorTemp) as MaxTemp, AVG(outdoorTemp) as MeanTemp, AVG(pelletsLevel) as level 
+            MAX(outdoorTemp) as MaxTemp, AVG(outdoorTemp) as MeanTemp, AVG(pelletsLevel) as level, MAX(gastemp) as MaxGasTemp
             FROM pellets WHERE date>= '{0}' AND DATE <= '{1}'""".format(convertToDBLocal(currDay), convertToDBLocal(nextDay))
             res = self.db.execute(q).fetchone()
             if res == None or res['date'] == None or res['endDate'] == None:
