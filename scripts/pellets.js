@@ -44,6 +44,8 @@ function setupButtons()
 function setFailedValues() {
     $("#boilerTempVal").html("-");
     $("#outerTempVal").html("-");
+    $("#radiatorTempVal").html("-");
+    $("#indoorTempVal").html("-");
     $("#storageVal").html("-");
     $("#statusVal").html("-");
     $("#usageVal").html("-");
@@ -100,6 +102,8 @@ function dbReadOk(resp) {
     var t = data["outdoorTemp"].toFixed(1);
     $("#outerTempVal").html((t > 0 ? "+" + t : t));
     $("#boilerTempVal").html(data["boilerTemp"].toFixed(1));
+    $("#indoorTempVal").html(data["indoorTemp"].toFixed(1));
+    $("#radiatorTempVal").html(data["supplyTemp"].toFixed(1));
     $("#storageVal").html(data["pelletsLevel"].toFixed(1));
     $("#statusVal").html(data["status"]);
     
@@ -122,7 +126,6 @@ function dbReadOk(resp) {
 }
 
 function updateLastVals() {
-
     $.getJSON("/data", { last: true }, function (resp, reqstatus) {
         if (reqstatus == "success" && resp != null) {
             requestSuccess();
@@ -131,8 +134,8 @@ function updateLastVals() {
             var now = time.getTime();
             var dbTime = new Date(data["date"]);
             var dbMs = dbTime.getTime();
-            $("#lastDbTime").html(dbTime);
-            if (now - dbMs < 20000)
+            $("#lastDbTime").html(dbTime.toDateString() + " " + dbTime.toLocaleTimeString());
+            if (now - dbMs < 60000)
                 dbReadOk(resp);
             else
                 dbReadToOld();
